@@ -16,11 +16,13 @@ export default {
         }
     },
     mounted(){
-        let count = 0;
         let data = this.$route.params.events;
-        while(count < data.length){
+        if(data != undefined){
+            let count = 0;
+            while(count < data.length){
             this.Events.push(JSON.parse(data[count]));
             count++;
+            }
         }
     },
 }
