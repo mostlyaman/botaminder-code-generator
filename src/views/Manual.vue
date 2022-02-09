@@ -1,10 +1,12 @@
 <template>
     <h1>Add Events Manually</h1>
     <Editor :events='events' />
+    <Footer></Footer>
 </template>
 
 <script>
 import Editor from '@/components/Editor.vue'
+import Footer from '@/components/Footer.vue'
 export default {
     name: "Manual",
     data() {
@@ -14,6 +16,7 @@ export default {
     },
     components: {
         Editor,
+        Footer
     },
 }
 </script>

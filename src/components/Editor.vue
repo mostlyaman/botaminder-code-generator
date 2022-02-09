@@ -32,8 +32,10 @@ export default {
             this.events.push({
                 id: 0,
                 name: "",
-                hour: 0,
-                min: 0
+                startHour: 0,
+                startMin: 0,
+                endHour: 0,
+                endMin: 0
             })
         }
     },
@@ -43,8 +45,10 @@ export default {
             this.events.push({
                 id: newField,
                 name: "",
-                hour: 0,
-                min: 0
+                startHour: 0,
+                startMin: 0,
+                endHour: 0,
+                endMin: 0
             })
         },
         removeAllEvents(){
@@ -52,8 +56,10 @@ export default {
             this.events[0] = {
                 id: 0,
                 name: "",
-                hour: 0,
-                min: 0
+                startHour: 0,
+                startMin: 0,
+                endHour: 0,
+                endMin: 0
             }
             this.formValid = null;
         },
@@ -61,8 +67,12 @@ export default {
             let e = 0;
             let data = [];
             while(e < this.events.length){
-                if(this.events[e].hour === NaN || this.events[e].min === NaN){
-                    alert('Not defined hour or min');
+                if(this.events[e].startHour === NaN || this.events[e].startMin === NaN){
+                    alert('Not defined start hour or min');
+                    return;
+                }
+                if(this.events[e].endHour === NaN || this.events[e].endMin === NaN){
+                    alert('Not defined end hour or min');
                     return;
                 }
                 data.push(JSON.stringify(this.events[e]));

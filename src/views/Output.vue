@@ -1,15 +1,40 @@
 <template>
     <h1>Code Generated!!</h1>
     <h4 style = "padding:10px;">
-        Upload the code below to your Arduino Board. Testing the code on Wokwi Simulator first is always a good idea!
+        Upload the code below to your Arduino Board. Testing the code on Wokwi Simulator first is always a great idea!
     </h4>
+<div class="links">
+  <w-button @click = "copyToClipboard" class = "ma1" bg-color = "info" lg>Copy to Clipboard</w-button>
+
+  <a href="https://wokwi.com/arduino/projects/323111706679050836" target = "_blank">
+  <w-button class="ma1" bg-color = "success" style = "padding:5px; font-size:14;" lg>Simulate on Wokwi</w-button>
+  </a>
+
+  <w-notification
+    v-model="showNotification"
+    :timeout="timeout"
+    sucess
+    plain
+    round
+    shadow>
+    Copied to Clipboard!
+  </w-notification>
+
+</div>
+<br/>
 <v-ace-editor
     v-model:value="content"
     @init="editorInit"
     lang = 'c_cpp'
     :printMargin = "false"
     theme="monokai"
-    style="height: 400px; width: 80%; align-self: center;" />
+    wrap
+    style="height: 300px; width: 60%; align-self: center;" />
+
+
+<Footer/>
+
+
 </template>
 
 
@@ -20,6 +45,7 @@
 import { VAceEditor } from 'vue3-ace-editor';
 import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/mode-c_cpp';
+import Footer from '@/components/Footer.vue'
 export default {
     name: 'Output',
     props: {
@@ -27,11 +53,21 @@ export default {
     },
     components: {
         VAceEditor,
+        Footer,
+    },
+    methods: {
+        editorInit(){},
+        copyToClipboard(){
+          navigator.clipboard.writeText(this.content);
+          this.showNotification = !this.showNotification;
+        }
     },
     data() {
         return {
             Events: [],
-            content: ""
+            content: "",
+            timeout: 2000,
+            showNotification: false
         }
     },
     mounted(){
@@ -88,14 +124,24 @@ long eventStartTime["+ this.Events.length.toString() + "] = { ";
 
             count=0;
             while(count<this.Events.length){
-                content1+= "(long)"+this.Events[count].hour.toString()+"*3600+(long)"+this.Events[count].min.toString()+"*60";
+                content1+= "(long)"+this.Events[count].startHour.toString()+"*3600+(long)"+this.Events[count].startMin.toString()+"*60";
                 if(count !== this.Events.length-1){
                     content1+= ", ";
                 }
                 count++;
             }
             content1+= " };\n\
-long eventEndTime[1] = {(long)10*3600+(long)0*60};\n\
+long eventEndTime[" + this.Events.length + "] = { ";
+
+            count=0;
+            while(count<this.Events.length){
+                content1+="(long)"+this.Events[count].endHour.toString()+"*3600+(long)"+this.Events[count].endMin.toString()+"*60";
+                if(count!== this.Events.length-1){
+                  content1+=", "
+                }
+                count++;
+            }
+            content1+=" };\n\
 int eventScrollingSpeed = 4;\n\
 long waterReminder = (long)3*3600;\n\
 long breakReminder = (long)4*3600;\n\
@@ -370,12 +416,10 @@ void alarm() {\n\
             this.content = content1;
         }else{
             this.$router.push({name: "Home"});
-            alert("Inputs not clear. Plese Try Again! If this repeats, post a issue at github.com/mostlyaman/botaminder");
+            alert("Inputs not clear. Plese Try Again! This usually happens if the output page is reloaded.");
         }
     },
-    methods: {
-        editorInit(){}
-    }
+
 }
 </script>
 
