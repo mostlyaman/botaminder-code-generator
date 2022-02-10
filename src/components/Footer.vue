@@ -1,7 +1,7 @@
 <template>
     <footer>
         <p>The Botaminder Project by Team FreshBOTS</p>
-            <a href="https://github.com/mostlyaman/botaminder" target="_blank">
+            <a href="https://github.com/mostlyaman/botaminder-code-generator" target="_blank">
             <w-button bg-color = "black" color = 'white' lg>
             <i class="fa-brands fa-github-square fa-1x"></i>Github
             </w-button>

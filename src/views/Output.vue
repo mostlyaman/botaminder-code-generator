@@ -90,7 +90,7 @@ export default {
  * and structure your day on the fly.\n\
  * \n\
  * Read Full Documentation here:\n\
- * Github Repository: https://github.com/lakshay162/botaminder/tree/latest\n\
+ * Github Repository: https://github.com/mostlyaman/botaminder-code-generator/\n\
  * ---------------------------------------------------------------------------------------\n\
  * \n\
  * ==============================================================================\n\
